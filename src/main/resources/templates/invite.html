@@ -2,42 +2,93 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title> 공동작업자 초대 </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 100px 130px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            text-align: center;
+            border-radius: 10px;
+            position: relative;
+        }
+        h1 {
+            padding-bottom: 30px;
+            font-family: 'Roboto' ;
+        }
+        .home-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .bu {
+            margin-top: 15px;
+            width: 90%;
+            background-color: cornflowerblue;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 10px;
+            color: white;
+        }
+        .i {
+            padding: 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #f4f4f4;
+        }
+
+    </style>
 </head>
 <body>
-<h1> 공동작업자 초대 </h1>
-<div th:if="${member == null}">
-    <form th:action="@{/member/search}" method="post">
-        <div>
-            <label for="memberName"> 사용자 ID 검색 : </label>
-            <input type="text" id="memberName" name="memberName" required>
-            <input type="hidden" name="noteId" th:value="${noteId}">
-        </div>
-        <div>
-            <input type="submit" value="검색">
-        </div>
-    </form>
-</div>
+<div class="container">
+    <h1> 공동작업자 초대 </h1>
+    <div th:if="${member == null}">
+        <form th:action="@{/member/search}" method="post">
+            <div >
+                <label for="memberName" style="font-size: 15px; font-family: bolder"  > 사용자 ID 검색  </label><br>
+                <input type="text" id="memberName" name="memberName" required class="i">
+                <input type="hidden" name="noteId" th:value="${noteId}">
+            </div>
+            <div >
+                <input type="submit" value="검색" class="bu">
+            </div>
+        </form>
+    </div>
 
-<!-- 검색한 공동 작업자 추가 -->
-<!-- 상세 페이지에서 넘어올때 noteId 가져와야함 -->
-<div th:if="${member != null && errorMessage == null}">
-    <form th:action="@{/collaborator/invite/{id}(id=${noteId})}" method="post">
-        조회한 공동 작업자 : <p th:text="${member.memberName}"></p>
-        <input type="hidden" name="memberName" th:value="${member.memberName}"/>
-        <input type="hidden" name="noteId" th:value="${noteId}"/>
-        <div>
-            <input type="submit" value="초대">
-        </div>
-    </form>
-</div>
+    <!-- 검색한 공동 작업자 추가 -->
+    <!-- 상세 페이지에서 넘어올때 noteId 가져와야함 -->
+    <div th:if="${member != null && errorMessage == null}">
+        <form th:action="@{/collaborator/invite/{id}(id=${noteId})}" method="post">
+            조회한 공동 작업자 : <p th:text="${member.memberName}"></p>
+            <input type="hidden" name="memberName" th:value="${member.memberName}"/>
+            <input type="hidden" name="noteId" th:value="${noteId}"/>
+            <div>
+                <input type="submit" value="초대">
+            </div>
+        </form>
+    </div>
 
-<!-- 에러 메시지 -->
-<div style="color: red" th:if="${errorMessage != null}">
-    <p th:text="${errorMessage}"></p>
-</div>
+    <!-- 에러 메시지 -->
+    <div style="color: red" th:if="${errorMessage != null}">
+        <p th:text="${errorMessage}"></p>
+    </div>
 
-<div>
-    <a th:href="@{/home}" class="home-link"> HOME </a>
+    <div>
+        <a th:href="@{/home}" class="home-link"> HOME </a>
+    </div>
 </div>
 </body>
 </html>

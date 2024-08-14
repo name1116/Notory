@@ -2,20 +2,71 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title> 회원권 구매 </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 100px 130px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            text-align: center;
+            border-radius: 10px;
+            position: relative;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            cursor: pointer;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            width: 200px;
+            text-align: center;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: lightskyblue;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 80%;
+        }
+        h1 {
+            padding-bottom: 30px;
+        }
+    </style>
 </head>
 <body>
-<h1> Buy Membership </h1>
-<form th:action="@{/role/buy}" method="post">
-    <div>
-        <label> Premium </label>
-        <input type="radio" name="role" value="premium">
-    </div>
-    <div>
-        <label> Standard </label>
-        <input type="radio" name="role" value="standard">
-    </div>
-    <button> 구매 </button>
-</form>
+<div class="container">
+    <h1> Membership Card </h1>
+    <form th:action="@{/role/buy}" method="post">
+        <div class="option">
+            <label> Premium </label>
+            <input type="radio" name="role" value="premium">
+        </div>
+        <div class="option">
+            <label> Standard </label>
+            <input type="radio" name="role" value="standard">
+        </div>
+        <button> 구매 </button>
+    </form>
+</div>
 </body>
 </html>
 

@@ -21,9 +21,11 @@
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             max-width: 800px; /* 표의 최대 너비 설정 */
+            width: 100%; /* 컨테이너가 가로 공간을 모두 사용하도록 설정 */
+            gap: 20px;
         }
         .info-item {
-            margin-right: 300px;
+            flex: 1;
         }
         .info-label {
             font-weight: bold;
@@ -34,6 +36,9 @@
         .info-value {
             font-size: 16px;
             color: #333;
+            white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 설정 */
+            overflow: hidden; /* 넘치는 텍스트를 숨김 */
+            text-overflow: ellipsis; /* 넘치는 텍스트에 ... 추가 */
         }
         button {
             padding: 10px 20px;
@@ -69,13 +74,16 @@
             <span class="info-value" th:text="${memberName}">[user_id]</span>
         </div>
         <div class="info-item">
-            <span class="info-label">요청일자</span>
+            <span class="info-label">요청 일자</span>
             <span class="info-value" th:text="${requestDate}">[요청일자]</span>
         </div>
     </div>
     <div>
-        <button class="click-button">수락</button>
-        <button class="click-button">거절</button>
+        <form th:action="@{/}" method="get">
+            <button type="submit" name="action" value="accept" class="click-button">수락</button>
+            <button type="submit" name="action" value="reject" class="click-button">거절</button>
+            <input type="hidden" name="action" value="tempNoteId">
+        </form>
     </div>
 </div>
 <form th:action="@{/home/list}" method="get" style="margin-top: 20px;">
