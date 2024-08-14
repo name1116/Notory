@@ -110,6 +110,10 @@
             <a th:href="@{/collaborator/invite/{id}(id=${note.id})}" class="invite-link"> 공동 작업자 초대하기 </a>
         </div>
     </form>
+    <!-- 에러 메시지 -->
+    <div style="color: red" th:if="${errorMessage != null}">
+        <p th:text="${errorMessage}"></p>
+    </div>
     <a th:href="@{/home/list}" class="list-link"> 글 목록 </a>
 </div>
 </body>

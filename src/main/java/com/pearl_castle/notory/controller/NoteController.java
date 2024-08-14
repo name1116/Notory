@@ -100,26 +100,26 @@ public class NoteController {
      * 글 추가
      */
     @GetMapping("/add")
-    public String showAddForm(@RequestParam(value = "error", required = false) String error, Model model, Authentication authentication) {
+    public String showAddForm(@RequestParam(value = "error", required = false) String error, Model model, Authentication authentication, @ModelAttribute("errorMessage") String errorMessage) {
         String username = "";
         if (authentication != null && authentication.isAuthenticated()) {
             username = authentication.getName();
             model.addAttribute("username", username);
         }
+        if (error != null) {
+            model.addAttribute("errorMessage", errorMessage);
+        }
 
         model.addAttribute("note", new Note());
 
-        if(error != null) {
-            int maxLength = (Integer) model.asMap().get("maxLength");
-            model.addAttribute("error", "입력된 내용이 허용된 길이를 초과했습니다. (" + maxLength + "자까지 입력 가능합니다.)");
-        }
         return "write"; // write.html
     }
     @PostMapping("/add")
     public String addNote(@ModelAttribute Note note, Authentication authentication, RedirectAttributes redirectAttributes) {
         Member member = memberService.findByMemberName(authentication.getName());
         note.setOwner(member);
-        String accountType = member.getRole();
+        // Spring Security ROLE 에 따른 글자수 제한
+        String accountType = authentication.getAuthorities().toString();
 
         int maxLength = 100; // Standard (Default)
         if(accountType.equals("premium")) {
@@ -129,6 +129,7 @@ public class NoteController {
         if (note.getContent().length() > maxLength) {
             // 길이 초과 시 에러 메시지를 모델에 추가하고 폼으로 다시 이동
             redirectAttributes.addFlashAttribute("maxLength", maxLength);
+            redirectAttributes.addFlashAttribute("errorMessage", "허용 글자수를 초과하였습니다.");
             return "redirect:/home/add?error";  // contentForm은 다시 작성하는 페이지 이름
         }
 
