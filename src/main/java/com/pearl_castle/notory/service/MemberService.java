@@ -17,7 +17,7 @@ public class MemberService {
     public void joinMember(String memberName, String password) {
         // memberName 중복 체크
         if(memberRepository.existsByMemberName(memberName)) {
-            throw new IllegalStateException("사용자 정보가 없습니다.");
+            throw new IllegalStateException("중복 아이디 입니다. 다른 아이디를 설정해주세요.");
         }
         // Member 등록
         Member member = new Member();

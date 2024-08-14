@@ -77,6 +77,10 @@
             <a class="link-container" th:href="@{/join}"> 회원가입 </a>
         </div>
     </form>
+    <!-- 에러 메시지 -->
+    <div style="color: red" th:if="${errorMessage != null}">
+        <p th:text="${errorMessage}"></p>
+    </div>
     </div>
 </body>
 </html>

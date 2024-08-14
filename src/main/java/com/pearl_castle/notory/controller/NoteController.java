@@ -151,15 +151,11 @@ public class NoteController {
 
         TempNote tempNote = tempNoteService.findByNoteId(note.getId());
 
-        if(tempNote == null) {
-            model.addAttribute("memberName", "없음");
-            model.addAttribute("requestDate", "없음");
-        } else {
-            model.addAttribute("tempNoteId", tempNote.getId());
+        if(tempNote != null) {
             model.addAttribute("memberName", tempNote.getWriter().getMemberName());
             model.addAttribute("requestDate", tempNote.getCur_date());
+            model.addAttribute("tempNoteId", tempNote.getId());
         }
-
 
         return "owner";  // "owner"는 owner.html을 가리킵니다.
     }

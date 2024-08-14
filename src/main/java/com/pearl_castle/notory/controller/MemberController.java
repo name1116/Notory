@@ -57,15 +57,6 @@ public class MemberController {
     /**
      * 멤버 검색
      */
-    @GetMapping("/search")
-    public String search(@RequestParam(value = "error", required = false) String error, Model model) {
-        if (error != null) {
-            String errorMessage = (String) model.asMap().get("errorMessage");
-            model.addAttribute("errorMessage", errorMessage);
-        }
-        return "invite";
-    }
-
     @PostMapping("/search")
     public String searchMember(@RequestParam String memberName, @RequestParam Long noteId, RedirectAttributes redirectAttributes) {
         try {

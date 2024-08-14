@@ -19,12 +19,10 @@ public class CollaboratorController {
      * 글 공동 작업자로 초대
      */
     @GetMapping("/invite/{noteId}")
-    public String showInviteForm(@PathVariable Long noteId, @RequestParam(value = "error", required = false) String error, Model model, Authentication authentication) {
+    public String showInviteForm(@PathVariable Long noteId
+            , Model model, Authentication authentication, RedirectAttributes redirectAttributes
+    ) {
         try {
-            if (error != null) {
-                String errorMessage = (String) model.asMap().get("errorMessage");
-                model.addAttribute("errorMessage", errorMessage);
-            }
             String username = "";
             if (authentication != null && authentication.isAuthenticated()) {
                 username = authentication.getName();
@@ -41,13 +39,14 @@ public class CollaboratorController {
             model.addAttribute("noteId", noteId);
 
         }  catch (IllegalStateException e) {
-            model.addAttribute("errorMessage", e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
         return "invite";
     }
 
     @PostMapping("/invite/{noteId}")
-    public String inviteCollaborator(@PathVariable Long noteId, @RequestParam String memberName, RedirectAttributes redirectAttributes) {
+    public String inviteCollaborator(@PathVariable Long noteId, @RequestParam String memberName
+            , RedirectAttributes redirectAttributes) {
         try {
             // 공동작업자 DB 저장
             collaboratorService.save(memberName, noteId);

@@ -67,8 +67,8 @@
 <body>
 <h1>요청 자세히 보기</h1>
 <h3> < 수정 요청 내역 > </h3>
-<div class="container">
-    <div class="info-container">
+<div th:if="${memberName != null}" class="container">
+    <div  class="info-container">
         <div class="info-item">
             <span class="info-label">수정요청 멤버이름</span>
             <span class="info-value" th:text="${memberName}">[user_id]</span>
@@ -79,10 +79,10 @@
         </div>
     </div>
     <div>
-        <form th:action="@{/}" method="get">
+        <form th:action="@{/request/detail/decision}" method="post">
             <button type="submit" name="action" value="accept" class="click-button">수락</button>
             <button type="submit" name="action" value="reject" class="click-button">거절</button>
-            <input type="hidden" name="action" value="tempNoteId">
+            <input type="hidden" name="tempNoteId" th:value="${tempNoteId}">
         </form>
     </div>
 </div>
