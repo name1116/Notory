@@ -67,23 +67,26 @@
 <body>
 <h1>요청 자세히 보기</h1>
 <h3> < 수정 요청 내역 > </h3>
-<div th:if="${memberName != null}" class="container">
-    <div  class="info-container">
-        <div class="info-item">
-            <span class="info-label">수정요청 멤버이름</span>
-            <span class="info-value" th:text="${memberName}">[user_id]</span>
+<div class="container">
+    <div th:each="tempNote : ${tempNotes}">
+        <div class="info-container">
+            <div class="info-item">
+                <span class="info-label">수정요청 멤버이름</span>
+                <span class="info-value" th:text="${tempNote.writer.memberName}">[user_id]</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">요청 일자</span>
+                <span class="info-value" th:text="${tempNote.cur_date}">[요청일자]</span>
+            </div>
         </div>
-        <div class="info-item">
-            <span class="info-label">요청 일자</span>
-            <span class="info-value" th:text="${requestDate}">[요청일자]</span>
+        <div>
+            <form th:action="@{/request/detail/decision}" method="post">
+                <button type="submit" name="action" value="accept" class="click-button">수락</button>
+                <button type="submit" name="action" value="reject" class="click-button">거절</button>
+                <input type="hidden" name="tempNoteId" th:value="${tempNote.id}">
+                <input type="hidden" name="originNoteId" th:value="${tempNote.originNote.id}">
+            </form>
         </div>
-    </div>
-    <div>
-        <form th:action="@{/request/detail/decision}" method="post">
-            <button type="submit" name="action" value="accept" class="click-button">수락</button>
-            <button type="submit" name="action" value="reject" class="click-button">거절</button>
-            <input type="hidden" name="tempNoteId" th:value="${tempNoteId}">
-        </form>
     </div>
 </div>
 <form th:action="@{/home/list}" method="get" style="margin-top: 20px;">

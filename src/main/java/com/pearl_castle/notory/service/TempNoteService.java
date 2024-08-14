@@ -8,12 +8,14 @@ import jakarta.persistence.Id;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TempNoteService {
     private final TempNoteRepository tempNoteRepository;
 
-    public TempNote findByNoteId(Long id) {
+    public List<TempNote> findByNoteId(Long id) {
         return tempNoteRepository.findByNoteId(id);
     }
 

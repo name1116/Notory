@@ -20,7 +20,7 @@ public class CollaboratorRequestController {
 
     //공동 작업자 요청 처리. 수락/거절
     @PostMapping("/decision")
-    public String acceptOrRejectNote(@RequestParam Long tempNoteId, @RequestParam String action) {
+    public String acceptOrRejectNote(@RequestParam Long tempNoteId,@RequestParam String action, @RequestParam Long originNoteId) {
 
         TempNote tempNote = tempNoteService.findById(tempNoteId);
 
@@ -36,10 +36,8 @@ public class CollaboratorRequestController {
             }else if ("reject".equals(action)) {
                 tempNoteService.delete(tempNoteId);
             }
-        } else {
-            return "owner";
         }
-        return "owner";
+        return "redirect:/home/list/owner/"+originNoteId;
     }
 
 

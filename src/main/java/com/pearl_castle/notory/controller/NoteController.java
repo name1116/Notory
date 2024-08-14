@@ -149,12 +149,10 @@ public class NoteController {
     public String viewOwnerDetails(@PathVariable Long id, Model model) {
         Note note = noteService.findById(id);  // noteService를 통해 해당 id의 노트를 가져옵니다.
 
-        TempNote tempNote = tempNoteService.findByNoteId(note.getId());
+        List<TempNote> tempNotes = tempNoteService.findByNoteId(note.getId());
 
-        if(tempNote != null) {
-            model.addAttribute("memberName", tempNote.getWriter().getMemberName());
-            model.addAttribute("requestDate", tempNote.getCur_date());
-            model.addAttribute("tempNoteId", tempNote.getId());
+        if(tempNotes != null && !tempNotes.isEmpty()) {
+            model.addAttribute("tempNotes", tempNotes);
         }
 
         return "owner";  // "owner"는 owner.html을 가리킵니다.

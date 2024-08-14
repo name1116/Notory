@@ -2,26 +2,93 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title> My Page </title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            position: relative;
+            background-color: #fff;
+            padding: 200px 250px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            margin-bottom: 100px;
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            font-family: "Arial Narrow";
+            margin-top: -100px;
+        }
+        .ppp {
+            font-size: 14px ;
+        }
+        .ppp1 {
+            font-size: 12.5px;
+        }
+        .home-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .abcd {
+            text-align: center;
+            margin-top: -50px;
+        }
+        .info-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 16px;
+        }
+        .ttt {
+            text-align: left;
+            font-size: 12px;
+            font-family: bolder;
+        }
+    </style>
 </head>
 <body>
-<h1> MY PAGE </h1>
-<div>
-    <h2> 사용자 정보 </h2>
-    <p> 이름 : <span th:text="${member.getMemberName()}"> </span></p>
-    <p> 등급 : <span th:text="${member.getRole()}"> </span></p>
-    <p> 내가 쓴 글 </p>
-    <div th:each="note : ${notes}">
-        <ul>
-            <li>
+<div class="form-container">
+    <h1> MY PAGE </h1>
+    <div class="abcd">
+        <div class="info-box">
+            <p class="ppp"> 📌 <span th:text="${member.getMemberName()}"> </span> 📌 </p>
+        </div>
+        <div class="info-box">
+            <p class="ppp"> 👑 <span th:text="${member.getRole()}"> </span> 👑</p>
+        </div>
+        <div class="info-box">
+            <p class="ppp1"> 📌 My List 📌 </p>
+
+
+            <div th:each="note : ${notes}" class="ttt">
+                <ul>
+                    <li>
                 <span>
                     <a th:href="@{/home/list/detail/{id}(id=${note.id})}" th:text="${note.title}"></a>
                 </span>
-            </li>
-        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
     </div>
 
+    <a th:href="@{/home}" class="home-link"> 🏠 HOME 🏠 </a>
 </div>
-
-<a th:href="@{/home}"> HOME </a>
 </body>
 </html>
