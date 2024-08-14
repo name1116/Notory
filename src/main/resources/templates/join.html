@@ -75,6 +75,10 @@
     <div class="link-container">
         <a th:href="@{/login}"> 회원이신가요 ? 로그인하러 가기 </a>
     </div>
+    <!-- 에러 메시지 -->
+    <div style="color: red" th:if="${errorMessage != null}">
+        <p th:text="${errorMessage}"></p>
+    </div>
 </div>
 </body>
 </html>

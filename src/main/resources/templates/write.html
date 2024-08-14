@@ -91,6 +91,9 @@
 </head>
 <body>
 <div class="form-container">
+    <div>
+        <a th:href="@{/home}" class="home-link"> 🏠 HOME 🏠 </a>
+    </div>
     <h1 th:text="${note.id} ? 'Edit Note' : 'Add New Note'"></h1>
     <form th:action="${note.id} ? @{/home/update/{id}(id=${note.id})} : @{/home/add}"
           th:object="${note}" method="post">
