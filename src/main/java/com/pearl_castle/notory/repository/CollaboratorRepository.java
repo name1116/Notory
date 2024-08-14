@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface CollaboratorRepository extends JpaRepository<Collaborator, Long> {
     List<Collaborator> findByMemberId(Long id);
-    List<Collaborator> findByNoteId(Long id);
+    Optional<Collaborator> findByNoteId(Long id);
 
     Optional<Collaborator> findByMemberAndNote(Member member, Note note);
 }

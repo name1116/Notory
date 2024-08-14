@@ -1,7 +1,7 @@
 package com.pearl_castle.notory.controller;
 
+import com.pearl_castle.notory.model.Collaborator;
 import com.pearl_castle.notory.service.CollaboratorService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -20,17 +20,29 @@ public class CollaboratorController {
      */
     @GetMapping("/invite/{noteId}")
     public String showInviteForm(@PathVariable Long noteId, @RequestParam(value = "error", required = false) String error, Model model, Authentication authentication) {
-        if (authentication != null && authentication.isAuthenticated()) {
-            model.addAttribute("username", authentication.getName());
-        }
-        if (error != null) {
-            String errorMessage = (String) model.asMap().get("errorMessage");
-            model.addAttribute("errorMessage", errorMessage);
-        }
+        try {
+            if (error != null) {
+                String errorMessage = (String) model.asMap().get("errorMessage");
+                model.addAttribute("errorMessage", errorMessage);
+            }
+            String username = "";
+            if (authentication != null && authentication.isAuthenticated()) {
+                username = authentication.getName();
+                model.addAttribute("username", username);
+            }
+            if (noteId == null || noteId < 0) return "redirect:/home/list"; // 글 목록으로 리다이렉트
 
-        if (noteId == null || noteId < 0) return "redirect:details";
-        model.addAttribute("noteId", noteId);
+            // note 소유주가 아니면 페이지 접근 불가
+            Collaborator collaborator = collaboratorService.findByNoteId(noteId);
+            if (!collaborator.getNote().getOwner().getMemberName().equals(username)) {
+                return "redirect:/home/list"; // 글 목록으로 리다이렉트
+            }
 
+            model.addAttribute("noteId", noteId);
+
+        }  catch (IllegalStateException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
         return "invite";
     }
 

@@ -51,7 +51,10 @@ public class CollaboratorService {
         return collaboratorRepository.findByMemberId(id);
     }
 
-    public List<?> getListByNoteId(Long id) {
-        return collaboratorRepository.findByNoteId(id);
+    public Collaborator findByNoteId(Long id) {
+        Optional<Collaborator> collaborator = collaboratorRepository.findByNoteId(id);
+        if (collaborator.isEmpty()) throw new IllegalStateException("조회되는 공동작업자가 없습니다.");
+
+        return collaborator.get();
     }
 }

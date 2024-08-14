@@ -2,7 +2,6 @@ package com.pearl_castle.notory.controller;
 
 import com.pearl_castle.notory.model.Member;
 import com.pearl_castle.notory.service.MemberService;
-import com.pearl_castle.notory.service.NoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
