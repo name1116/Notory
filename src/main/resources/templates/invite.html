@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title> 공동작업자 초대 </title>
+</head>
+<body>
+<h1> 공동작업자 초대 </h1>
+<div th:if="${member == null}">
+    <form th:action="@{/member/search}" method="post">
+        <div>
+            <label for="memberName"> 사용자 ID 검색 : </label>
+            <input type="text" id="memberName" name="memberName" required>
+            <input type="hidden" name="noteId" th:value="${noteId}">
+        </div>
+        <div>
+            <input type="submit" value="검색">
+        </div>
+    </form>
+</div>
+
+<!-- 검색한 공동 작업자 추가 -->
+<!-- 상세 페이지에서 넘어올때 noteId 가져와야함 -->
+<div th:if="${member != null && errorMessage == null}">
+    <form th:action="@{/collaborator/invite/{id}(id=${noteId})}" method="post">
+        조회한 공동 작업자 : <p th:text="${member.memberName}"></p>
+        <input type="hidden" name="memberName" th:value="${member.memberName}"/>
+        <input type="hidden" name="noteId" th:value="${noteId}"/>
+        <div>
+            <input type="submit" value="초대">
+        </div>
+    </form>
+</div>
+
+<!-- 에러 메시지 -->
+<div style="color: red" th:if="${errorMessage != null}">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+<div>
+    <a th:href="@{/home}" class="home-link"> HOME </a>
+</div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title> > 진주성 공유작업소 < </title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 200px 150px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            text-align: center;
+
+        }
+        h1 {
+            color: steelblue;
+            margin-top: -140px;
+        }
+        input[type="submit"] {
+            background-color: #4682b4;
+            color: white;
+            padding: 15px 25px;
+            margin: 5px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            margin-top: 150px;
+            width: 100%;
+        }
+        p {
+            margin: 20px 0;
+            font-size: 20px;
+            font-weight: bolder;
+        }
+        .hole {
+            margin-top: 280px;
+        }
+        .spaced-link {
+            margin: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1> ☁️ 공작소 by pearl_castle에 오신것을 환영합니다 ️ ☁️ </h1>
+     <div th:if="${username == null}">
+        <a th:href="@{/login}"> 로그인 </a>
+        <a th:href="@{/join}"> 회원가입 </a>
+    </div>
+    <div th:if="${username != null}">
+        <p>환영합니다,  <span th:text="${username}"></span> 님 ! </p>
+        <div class="hole">
+            <a th:href="@{home/list}" class="spaced-link"> 목록 보기 </a>
+            <a th:href="@{/role/buy}" class="spaced-link"> 회원권 구매하기 </a>
+            <a th:href="@{member/mypage}" class="spaced-link"> My Page </a>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="logout">
+        </form>
+    </div>
+</div>
+</body>
+</html>

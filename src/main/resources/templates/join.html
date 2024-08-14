@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <title> 회원가입 </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: bisque;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            color: rosybrown;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: darksalmon;
+            color: black;
+            border: none;
+            padding: 12px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor:pointer;
+            font-size: 13px;
+            width: 100px;
+            margin-left: 40px;
+        }
+        .link-container {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1> 회원 가입 </h1>
+    <form th:action="@{/join}" method="post">
+        <div>
+            <label for="memberName"> ID : </label>
+            <input type="text" id="memberName" name="memberName" required>
+        </div>
+        <div>
+            <label for="password"> PASSWORD : </label>
+            <input type="text" id="password" name="password" required>
+            <input type="submit" value="join">
+        </div>
+    </form>
+    <div class="link-container">
+        <a th:href="@{/login}"> 회원이신가요 ? 로그인하러 가기 </a>
+    </div>
+</div>
+</body>
+</html>

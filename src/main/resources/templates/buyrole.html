@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title> 회원권 구매 </title>
+</head>
+<body>
+<h1> Buy Membership </h1>
+<form th:action="@{/role/buy}" method="post">
+    <div>
+        <label> Premium </label>
+        <input type="radio" name="role" value="premium">
+    </div>
+    <div>
+        <label> Standard </label>
+        <input type="radio" name="role" value="standard">
+    </div>
+    <button> 구매 </button>
+</form>
+</body>
+</html>
+

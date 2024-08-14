@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>글 목록 리스트</title>
+    <style>
+        body {
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: #fff;
+            padding: 350px 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 100px;
+            max-width: 100%;
+            text-align: center;
+            border-radius: 10px;
+            position: relative;
+        }
+        h1 {
+            margin-top: -250px;
+        }
+        .new-post-link {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+        .home-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        p {
+            margin: 20px 0;
+            font-size: 20px;
+            font-weight: bolder;
+        }
+        .left-align {
+            text-align: left;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+            text-align: left;
+        }
+        td {
+            text-align: left;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${username} + '님의 글 리스트'">글 리스트</h1>
+    <div class="left-align">
+        <table>
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>공동작업자</th>
+                <th>작업</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="note : ${notes}">
+                <td th:text="${note.id}"></td>
+                <td>
+                    <a th:href="@{/home/list/detail/{id}(id=${note.id})}" th:text="${note.title}"></a>
+                </td>
+                <td>
+                    <!-- 공동 작업자 리스트 불러오기 -->
+                    <span th:text="${note.owner.memberName}" th:style="'font-weight: bold;'"></span>
+                    <div th:each="collaborator: ${note.getCollaborators()}">
+                        <span th:text="${collaborator.getMember().getMemberName()}"></span>
+                    </div>
+                </td>
+                <td>
+                    <a th:href="@{/home/update/{id}(id=${note.id})}" style="display: inline-block; margin-right: 5px;"> 수정 </a>
+                    <!-- 소유한 글인 경우, 글 수정 요청보기 & 삭제 가능 -->
+                    <div th:if="${note.getOwner().memberName == username}">
+                        <a th:href="@{/home/list/owner/{id}(id=${note.id})}" style="margin-right: 5px;"> 요청보기 </a>
+                        <form th:action="@{/home/delete/{id}(id=${note.id})}" method="post" style="display: inline-block;">
+                            <button type="submit">삭제</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <a th:href="@{/home/add}" class="new-post-link">✏️ 새로운 글 작성하기 ✏️</a>
+    <a th:href="@{/home}" class="home-link">🏠 HOME 🏠</a>
+</div>
+</body>
+</html>

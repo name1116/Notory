@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title> My Page </title>
+</head>
+<body>
+<h1> MY PAGE </h1>
+<div>
+    <h2> 사용자 정보 </h2>
+    <p> 이름 : <span th:text="${member.getMemberName()}"> </span></p>
+    <p> 등급 : <span th:text="${member.getRole()}"> </span></p>
+    <p> 내가 쓴 글 </p>
+    <div th:each="note : ${notes}">
+        <ul>
+            <li>
+                <span>
+                    <a th:href="@{/home/list/detail/{id}(id=${note.id})}" th:text="${note.title}"></a>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<a th:href="@{/home}"> HOME </a>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${note.id} ? '글 수정' : '새로운 글 추가'"></title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            position: relative;
+            background-color: #fff;
+            padding: 150px 250px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .list-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        h1 {
+            margin-bottom: 100px;
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            font-family: bolder;
+        }
+        button {
+            width: 80%;
+            background-color: lightslategrey;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 45px;
+            text-align: center;
+            padding: 10px;
+            margin-top: 120px;
+        }
+        .abc {
+            margin-top: 10px;
+        }
+        .large-input {
+            width: 100%;
+            padding: 20px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        .small-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 13px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        .fix-label{
+            margin-right: 15px;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        .invite-link {
+            display: inline-block;
+            background-color: darkslateblue;
+            width: 75%;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 45px;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h1 th:text="${note.id} ? 'Edit Note' : 'Add New Note'"></h1>
+    <form th:action="${note.id} ? @{/home/update/{id}(id=${note.id})} : @{/home/add}"
+          th:object="${note}" method="post">
+
+        <div class="abc">
+            <label for="title" class="fix-label"> 제목 </label>
+            <input type="text" id="title" th:field="*{title}" required class="small-input"> <br><br>
+            <label for="content" class="fix-label"> 내용 </label>
+            <input type="text" id="content" th:field="*{content}" required class="large-input">
+
+        </div>
+        <button type="submit" th:text="${note.id} ? '수정' : '추가'"></button>
+        <div th:if="${note.id != null && username == note.owner.memberName}">
+            <a th:href="@{/collaborator/invite/{id}(id=${note.id})}" class="invite-link"> 공동 작업자 초대하기 </a>
+        </div>
+    </form>
+    <a th:href="@{/home/list}" class="list-link"> 글 목록 </a>
+</div>
+</body>
+</html>
